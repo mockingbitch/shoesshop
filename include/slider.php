@@ -10,15 +10,15 @@
         <!-- Wrapper for slides -->
         <div class="carousel-inner">
             <div class="item active">
-                <img src="/images/slide1.jpg" alt="Los Angeles" style="width:100%;">
+                <img src="http://localhost/shoes//images/slide1.jpg" alt="Los Angeles" style="width:100%;">
             </div>
 
             <div class="item">
-                <img src="/images/slider2.png" alt="Chicago" style="width:100%;">
+                <img src="http://localhost/shoes//images/slider2.png" alt="Chicago" style="width:100%;">
             </div>
 
             <div class="item">
-                <img src="/images/slider3.jpg" alt="New york" style="width:100%;">
+                <img src="http://localhost/shoes//images/slider3.jpg" alt="New york" style="width:100%;">
             </div>
         </div>
         <!-- Left and right controls -->

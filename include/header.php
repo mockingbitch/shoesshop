@@ -1,3 +1,17 @@
+<?php
+include_once 'lib/session.php';
+include_once 'classes/brand.php';
+//Session::checkSession();
+ob_start();
+session_start();
+?>
+<?php
+    if ($_SERVER['REQUEST_METHOD']=='GET' && isset($_GET['loggingout'])){
+        session_destroy();
+        header('location: index.php');
+       // echo '123';
+    }
+?>
 <!DOCTYPE html>
 <html lang="zxx">
 <head>
@@ -45,18 +59,6 @@
 
 <body class="js">
 
-<!-- Preloader -->
-<div class="preloader">
-    <div class="preloader-inner">
-        <div class="preloader-icon">
-            <span></span>
-            <span></span>
-        </div>
-    </div>
-</div>
-<!-- End Preloader -->
-
-
 <!-- Header -->
 <header class="header shop">
     <!-- Topbar -->
@@ -77,9 +79,18 @@
                     <!-- Top Right -->
                     <div class="right-content">
                         <ul class="list-main">
-                            <li><i class="ti-location-pin"></i> Địa chỉ</li>
-                            <li><i class="ti-user"></i> <a href="#">Tài khoản</a></li>
-                            <li><i class="ti-power-off"></i><a href="login.html#">Đăng nhập</a></li>
+                            <?php if (isset($_SESSION['customerlogin'])){
+                                ?>
+                                <li><i class="ti-user"></i> <a href="#"><?php echo $_SESSION['customername'] ?></a></li>
+                                <li><i class="ti-power-off"></i><a href="?loggingout=true.php">Đăng xuất</a></li>
+                            <?php
+                            }else{
+                                ?>
+<!--                                <li><i class="ti-user"></i> <a href="#">Tài khoản</a></li>-->
+                                <li><i class="ti-power-off"></i><a href="loginuser.php">Đăng nhập</a></li>
+                            <?php
+                            }
+                            ?>
                         </ul>
                     </div>
                     <!-- End Top Right -->
@@ -121,9 +132,9 @@
                                 <option>Ananas</option>
                                 <option>Adidas</option>
                             </select>
-                            <form>
+                            <form method="GET">
                                 <input name="search" placeholder="Tìm kiếm...." type="search">
-                                <button class="btnn"><i class="ti-search"></i></button>
+                                <button formaction="http://localhost/shoes/search-result.php" class="btnn"><i class="ti-search"></i></button>
                             </form>
                         </div>
                     </div>
@@ -137,7 +148,7 @@
                         <div class="sinlge-bar">
                             <a href="#" class="single-icon"><i class="fa fa-user-circle-o" aria-hidden="true"></i></a>
                         </div>
-                        <div class="sinlge-bar shopping">
+                        <div class="sinlge-bar shopping cart" id="listcart">
                             <a href="#" class="single-icon"><i class="ti-bag"></i> <span class="total-count">2</span></a>
                             <!-- Shopping Item -->
                             <div class="shopping-item">
@@ -146,25 +157,38 @@
                                     <a href="#">View Cart</a>
                                 </div>
                                 <ul class="shopping-list">
+                                    <?php if (isset($_SESSION['cart'])) : ?>
+                                    <?php $subtotal = 0; ?>
+                                    <?php foreach ($_SESSION['cart'] as $key => $value): ?>
                                     <li>
-                                        <a href="#" class="remove" title="Remove this item"><i class="fa fa-remove"></i></a>
-                                        <a class="cart-img" href="#"><img src="https://via.placeholder.com/70x70" alt="#"></a>
-                                        <h4><a href="#">Woman Ring</a></h4>
-                                        <p class="quantity">1x - <span class="amount">$99.00</span></p>
+                                        <button class="delete" onclick="removeCart(<?php echo $key; ?>)"><i class="fa fa-close"></i></button>
+                                        <a class="cart-img" href="#"><img src="http://localhost/shoes/admin/uploads/products/<?= $value['img'] ?>" alt="#"></a>
+                                        <h4><a href="#"><?= $value['name'] ?></a></h4>
+                                        <p class="quantity"><?= $value['qty'] ?> x <span class="amount"><?= $value['price'] ?></span></p>
                                     </li>
-                                    <li>
-                                        <a href="#" class="remove" title="Remove this item"><i class="fa fa-remove"></i></a>
-                                        <a class="cart-img" href="#"><img src="https://via.placeholder.com/70x70" alt="#"></a>
-                                        <h4><a href="#">Woman Necklace</a></h4>
-                                        <p class="quantity">1x - <span class="amount">$35.00</span></p>
-                                    </li>
+                                            <?php
+                                            $total = $value['qty']*$value['price'];
+                                            $subtotal = $subtotal+$total;
+                                            ?>
+                                        <?php endforeach; ?>
+                                    <?php else:?>
+                                        <p>Chưa có sản phẩm nào trong giỏ hàng!</p>
+                                    <?php endif; ?>
                                 </ul>
                                 <div class="bottom">
                                     <div class="total">
                                         <span>Total</span>
-                                        <span class="total-amount">$134.00</span>
+                                        <span class="total-amount"><?php
+                                            if (isset($_SESSION['cart'])){
+                                                ?>
+                                                <h5>Tổng tiền: <?php echo number_format($subtotal,0,',','.'); ?> Đ</h5>
+                                                <?php
+                                            }else{
+                                                echo '';
+                                            }
+                                            ?></span>
                                     </div>
-                                    <a href="checkout.html" class="btn animate">Checkout</a>
+                                    <a href="viewcart.php" class="btn animate">Xem giỏ hàng</a>
                                 </div>
                             </div>
                             <!--/ End Shopping Item -->
@@ -188,11 +212,22 @@
                                     <div class="nav-inner">
                                         <ul class="nav main-menu menu navbar-nav">
                                             <li class="active"><a href="index.php">Trang chủ</a></li>
-                                            <li><a href="#">Sản phẩm</a></li>
+                                            <li><a href="all-product.php">Sản phẩm</a></li>
                                             <li><a href="#">Danh mục<i class="ti-angle-down"></i><span class="new">New</span></a>
                                                 <ul class="dropdown">
-                                                    <li><a href="cart.html">Cart</a></li>
-                                                    <li><a href="checkout.html">Checkout</a></li>
+                                                    <?php
+                                                        $brand = new brand();
+                                                        $show_brand = $brand->show_brand();
+                                                        if ($show_brand){
+                                                            while ($result = $show_brand->fetch_assoc()){
+
+                                                    ?>
+                                                    <li><a href="product-of-brand.php?brand=<?= $result['brandId'] ?>"><?= $result['brandName'] ?></a></li>
+                                                    <?php
+
+                                                            }
+                                                        }
+                                                    ?>
                                                 </ul>
                                             </li>
                                             <li><a href="#">Blog<i class="ti-angle-down"></i></a>

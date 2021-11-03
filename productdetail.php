@@ -38,19 +38,19 @@ else{
                 <div class="col-md-5 col-md-push-2">
                     <div id="product-main-img">
                         <div class="product-preview">
-                            <img src="../admin/uploads/products/<?= $result['img']; ?>" alt="">
+                            <img src="admin/uploads/products/<?= $result['img']; ?>" alt="">
                         </div>
 
                         <div class="product-preview">
-                            <img src="../admin/uploads/products/<?= $result['img']; ?>" alt="">
+                            <img src="admin/uploads/products/<?= $result['img']; ?>" alt="">
                         </div>
 
                         <div class="product-preview">
-                            <img src="../admin/uploads/<?= $result['img']; ?>" alt="">
+                            <img src="admin/uploads/<?= $result['img']; ?>" alt="">
                         </div>
 
                         <div class="product-preview">
-                            <img src="../admin/uploads/<?= $result['img']; ?>" alt="">
+                            <img src="admin/uploads/<?= $result['img']; ?>" alt="">
                         </div>
                     </div>
                 </div>
@@ -61,19 +61,19 @@ else{
                 <div class="col-md-2  col-md-pull-5">
                     <div id="product-imgs">
                         <div class="product-preview">
-                            <img src="../admin/uploads/products/<?= $result['img']; ?>" alt="">
+                            <img src="admin/uploads/products/<?= $result['img']; ?>" alt="">
                         </div>
 
                         <div class="product-preview">
-                            <img src="../admin/uploads/products/<?= $result['img']; ?>" alt="">
+                            <img src="admin/uploads/products/<?= $result['img']; ?>" alt="">
                         </div>
 
                         <div class="product-preview">
-                            <img src="../admin/uploads/products/<?= $result['img']; ?>" alt="">
+                            <img src="admin/uploads/products/<?= $result['img']; ?>" alt="">
                         </div>
 
                         <div class="product-preview">
-                            <img src="../admin/uploads/products/<?= $result['img']; ?>" alt="">
+                            <img src="admin/uploads/products/<?= $result['img']; ?>" alt="">
                         </div>
                     </div>
                 </div>
@@ -107,9 +107,9 @@ else{
                                     <span class="qty-down">-</span>
                                 </div>
                             </div>
-                            <button class="add-to-cart-btn" onclick="addCart(<?php echo $result['productID'] ?>)"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ</button>
+                            <button class="add-to-cart-btn" onclick="addCart(<?php echo $result['productId'] ?>)"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ</button>
 
-                            <button style="margin: 30px 0px 0px 170px" class="add-to-cart-btn"><a href="cart.php" style="color: white;font-weight: bold"><i class="fa fa-shopping-cart"></i> Xem giỏ hàng</a></button>
+                            <button style="margin: 30px 0px 0px 170px" class="add-to-cart-btn"><a href="viewcart.php"  style="color: white;font-weight: bold"><i class="fa fa-shopping-cart"></i> Xem giỏ hàng</a></button>
                         </div>
 
                         <ul class="product-btns">
@@ -342,6 +342,60 @@ else{
                     </div>
                 </div>
                 <!-- /product tab -->
+            </div>
+            <!-- /row -->
+        </div>
+        <!-- /container -->
+    </div>
+    <div class="section">
+        <!-- container -->
+        <div class="container">
+            <!-- row -->
+            <div class="row">
+
+                <div class="col-md-12">
+                    <div class="section-title text-center">
+                        <h3 class="title">Sản phẩm liên quan</h3>
+                    </div>
+                </div>
+                <?php
+                $show_related_pr = $product->show_related_product();
+                if ($show_related_pr){
+                    while ($result_related = $show_related_pr->fetch_assoc()){
+
+                        ?>
+                        <!-- product -->
+                        <div class="col-md-3 col-xs-6">
+                            <div class="product">
+                                <div class="product-img">
+                                    <img src="admin/uploads/products/<?php echo $result_related['img'] ?>" alt="">
+                                    <div class="product-label">
+                                        <span class="sale">-30%</span>
+                                    </div>
+                                </div>
+                                <div class="product-body">
+                                    <!--                        <p class="product-category">Category</p>-->
+                                    <h3 class="product-name"><a href="#"><?php echo $result_related['productName'] ?></a></h3>
+                                    <h4 class="product-price"><?php echo number_format($result_related['productPrice'],0,',','.');?> Đ</h4>
+                                    <div class="product-rating">
+                                    </div>
+                                    <div class="product-btns">
+                                        <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
+                                        <button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>
+                                        <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
+                                    </div>
+                                </div>
+                                <div class="add-to-cart">
+                                    <button class="add-to-cart-btn" onclick="addCart(<?php echo $result_related['productid'] ?>)"><i class="fa fa-shopping-cart"></i> add to cart</button>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /product -->
+                        <?php
+                    }
+                }
+                ?>
+
             </div>
             <!-- /row -->
         </div>

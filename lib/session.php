@@ -37,7 +37,7 @@ class Session{
 
  public static function checkLogin(){
     self::init();
-    if (self::get("login")== true) {
+    if (self::get("login")== true || self::get("customerlogin")==true) {
      header("refresh:3,Location:index.php");
     }
 //     if (self::get("userlogin")== true) {

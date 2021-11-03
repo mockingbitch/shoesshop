@@ -4,17 +4,16 @@ include 'include/header.php';
 
 <div class="shopping-cart section">
     <div class="container">
-        <div class="row">
-            <div class="col-12" id="listcart">
+        <div class="row" id="listproduct">
+            <div class="col-12 cartreload" >
                 <!-- Shopping Summery -->
                 <?php if (isset($_SESSION['cart'])): ?>
                     <?php
                     $subtotal = 0;
                     ?>
-                    <table class="table shopping-summery" id="cart">
+                    <table class="table shopping-summery" >
                         <thead>
                         <tr class="main-hading">
-                            <th> </th>
                             <th>Ảnh sản phẩm</th>
                             <th>Tên sản phẩm</th>
                             <th class="text-center">Đơn giá</th>
@@ -26,8 +25,7 @@ include 'include/header.php';
                         <tbody>
                         <?php foreach ($_SESSION['cart'] as $key => $value ) : ?>
                             <tr>
-                                <td><button onclick="removeCart(<?php echo $key;  ?>)">X</button></td>
-                                <td class="image" data-title="No"><img width="100px" src="../admin/uploads/products/<?php echo $value['img'] ?>" alt="#"></td>
+                                <td class="image" data-title="No"><img width="100px" src=" admin/uploads/products/<?php echo $value['img'] ?>" alt="#"></td>
                                 <td class="product-des" data-title="Description">
                                     <p class="product-name"><a href="#"><?php echo $value['name'] ?></a></p>
 
@@ -44,7 +42,7 @@ include 'include/header.php';
                                 $total = $value['qty']*$value['price'];
                                 echo number_format($total,0,',','.');
                                 ?> Đ</span></td>
-                                <td align="center" class="action" data-title="Remove"><a href="#"><i class="ti-trash remove-icon"></i></a></td>
+                                <td align="center" class="action" data-title="Remove"><button onclick="removeCart(<?php echo $key;  ?>)"><i class="ti-trash remove-icon"></i></button></td>
                             </tr>
                             <?php $subtotal+= $total; ?>
                         <?php endforeach; ?>
@@ -61,7 +59,7 @@ include 'include/header.php';
             <div class="col-12">
                 <!-- Total Amount -->
                 <div class="total-amount">
-                    <div class="row">
+                    <div class="row total">
                         <div class="col-lg-8 col-md-5 col-12">
                             <div class="left">
                                 <div class="coupon">
@@ -77,16 +75,23 @@ include 'include/header.php';
                         </div>
                         <div class="col-lg-4 col-md-7 col-12">
                             <div class="right">
+                                <?php if(isset($_SESSION['cart'])){
+                                    ?>
                                 <ul>
-                                    <li><h3>Thành tiền: <span><?php echo number_format($subtotal,0,',','.');?> Đ</span></h3></li>
+                                    <li><h3>Thành tiền: <span ><?php echo number_format($subtotal,0,',','.');?> Đ</span></h3></li>
                                     <li>Vận chuyển<span>Free</span></li>
                                     <!--                                    <li>You Save<span>$20.00</span></li>-->
                                     <li class="last">Tổng <span><?php echo $subtotal ?></span></li>
                                 </ul>
                                 <div class="button5">
-                                    <a href="#" class="btn"><h4>Thanh toán</h4></a>
-                                    <a href="#" class="btn"><h4>Tiếp tục mua hàng</h4></a>
+                                    <a href="checkout.php" class="btn"><h4>Thanh toán</h4></a>
+                                    <a href="index.php" class="btn"><h4>Tiếp tục mua hàng</h4></a>
                                 </div>
+                                <?php
+                                }else{
+                                    echo 'Vui lòng thêm sản phẩm vào giỏ hàng';
+                                }
+                                ?>
                             </div>
                         </div>
                     </div>
@@ -100,12 +105,14 @@ include 'include/header.php';
     function updateCart(id){
         num = $("#qty_"+id).val();
         $.post('updatecart.php',{'id':id,'num':num},function(data){
-            $("#listcart").load("http://techshop.test/viewcart.php #cart");
+            $("#listcart").load("http://localhost/shoes/viewcart.php .cart");
+            $("#listproduct").load("http://localhost/shoes/viewcart.php .cartreload");
+            $(".total-amount").load("http://localhost/shoes/viewcart.php .total");
         });
     }
     function removeCart(id){
         $.post('updatecart.php',{'id':id,'num':0},function(data){
-            $("#listcart").load("http://techshop.test/viewcart.php #cart");
+            $(".total-amount").load("http://localhost/shoes/viewcart.php .total");
         });
     }
 </script>

@@ -45,6 +45,36 @@ class login
             }
         }
     }
+    public function login_user($email, $password){  //function xử lý đăng nhập
+        $email = $this->fm->validation($email);
+        $password = $this->fm->validation($password);
+        $email = mysqli_real_escape_string($this->db->link, $email);
+        $password = mysqli_real_escape_string($this->db->link, $password);
+
+        if(empty($email)||empty($password)){
+            $alert = "ID or password must be not empty";
+            return $alert;
+        }
+        else{
+            $query = "SELECT * FROM tbl_customer WHERE email = '$email' AND password = '$password' LIMIT 1";
+            $result = $this->db->select($query);
+
+            if($result!=false){
+                $value = $result->fetch_assoc();
+                Session::set('customerlogin',true);
+                Session::set('cusid',$value['customerId']);
+                Session::set('emailcustomer',$value['emailCustomer']);
+                Session::set('customername',$value['customerName']);
+                header('Location:index.php');
+                $alert = "Success";
+                return $alert;
+            }
+            else{
+                $alert = "Wrong user or password";
+                return $alert;
+            }
+        }
+    }
 
 
 }

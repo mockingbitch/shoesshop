@@ -191,6 +191,21 @@ class product
         $result = $this->db->select($query);
         return $result;
     }
+    public function show_related_product(){
+        $query = "SELECT * FROM tbl_product  ORDER BY productid DESC LIMIT 4";
+        $result = $this->db->select($query);
+        return $result;
+    }
+    public function show_product_by_brand($id){
+        $query = "SELECT * FROM tbl_product WHERE brand = '$id' ORDER BY productId DESC";
+        $result = $this->db->select($query);
+        return $result;
+    }
+    public function search_product($textsearch){
+        $query = "SELECT * FROM tbl_product WHERE productName LIKE '%$textsearch%' ORDER BY productId DESC";
+        $result = $this->db->select($query);
+        return $result;
+    }
 }
 
 ?>

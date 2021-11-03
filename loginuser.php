@@ -1,13 +1,13 @@
 <?php
-    include '../classes/login.php';
-    $login = new login(); // Khai báo class
-    if ($_SERVER['REQUEST_METHOD']=='POST' && isset($_POST['login'])){
-        //lấy dữ liệu từ ô input
-        $email = $_POST['email'];
-        $password = md5($_POST['password']);
-        //gọi hàm login để xử lý đăng nhập
-        $checklogin = $login->login($email,$password);
-    }
+include 'classes/customer.php';
+$login = new customer(); // Khai báo class
+if ($_SERVER['REQUEST_METHOD']=='POST' && isset($_POST['login'])){
+    //lấy dữ liệu từ ô input
+    $email = $_POST['email'];
+    $password = md5($_POST['password']);
+    //gọi hàm login để xử lý đăng nhập
+    $checklogin = $login->login_user($email,$password);
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -16,26 +16,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!--===============================================================================================-->
-    <link rel="icon" type="image/png" href="images/icons/favicon.ico"/>
+    <link rel="icon" type="admin/image/png" href="images/icons/favicon.ico"/>
     <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="css/login/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="admin/css/login/bootstrap.min.css">
     <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="css/login/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="admin/css/login/font-awesome.min.css">
     <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="css/login/icon-font.min.css">
+    <link rel="stylesheet" type="text/css" href="admin/css/login/icon-font.min.css">
     <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="css/login/animate.css">
+    <link rel="stylesheet" type="text/css" href="admin/css/login/animate.css">
     <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="css/login/hamburgers.min.css">
+    <link rel="stylesheet" type="text/css" href="admin/css/login/hamburgers.min.css">
     <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="css/login/animsition.min.css">
+    <link rel="stylesheet" type="text/css" href="admin/css/login/animsition.min.css">
     <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="css/login/select2.min.css">
+    <link rel="stylesheet" type="text/css" href="admin/css/login/select2.min.css">
     <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="css/login/daterangepicker.css">
+    <link rel="stylesheet" type="text/css" href="admin/css/login/daterangepicker.css">
     <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="css/login/util.css">
-    <link rel="stylesheet" type="text/css" href="css/login/main.css">
+    <link rel="stylesheet" type="text/css" href="admin/css/login/util.css">
+    <link rel="stylesheet" type="text/css" href="admin/css/login/main.css">
     <!--===============================================================================================-->
 </head>
 <body style="background-color: #666666;">
@@ -47,13 +47,7 @@
 					<span class="login100-form-title p-b-43">
 						Đăng nhập để tiếp tục
 					</span>
-                    <span style="color:red;">
-                        <?php
-                            if (isset($checklogin)){
-                                echo $checklogin;
-                            }
-                        ?>
-                    </span>
+
 
                 <div class="wrap-input100 validate-input" data-validate = "Valid email is required: ex@abc.xyz">
                     <input class="input100" type="text" name="email">
@@ -102,7 +96,7 @@
                 </div>
             </form>
 
-            <div class="login100-more" style="background-image: url('images/bg-02.jpg');">
+            <div class="login100-more" style="background-image: url('admin/images/bg-02.jpg');">
             </div>
         </div>
     </div>
@@ -113,21 +107,21 @@
 
 
 <!--===============================================================================================-->
-<script src="js/login/jquery-3.2.1.min.js"></script>
+<script src="admin/js/login/jquery-3.2.1.min.js"></script>
 <!--===============================================================================================-->
-<script src="js/login/animsition.min.js"></script>
+<script src="admin/js/login/animsition.min.js"></script>
 <!--===============================================================================================-->
-<script src="js/login/popper.js"></script>
-<script src="js/login/bootstrap.min.js"></script>
+<script src="admin/s/login/popper.js"></script>
+<script src="admin/js/login/bootstrap.min.js"></script>
 <!--===============================================================================================-->
-<script src="js/login/select2.min.js"></script>
+<script src="admin/js/login/select2.min.js"></script>
 <!--===============================================================================================-->
-<script src="js/login/moment.min.js"></script>
-<script src="js/login/daterangepicker.js"></script>
+<script src="admin/js/login/moment.min.js"></script>
+<script src="admin/js/login/daterangepicker.js"></script>
 <!--===============================================================================================-->
-<script src="js/login/countdowntime.js"></script>
+<script src="admin/js/login/countdowntime.js"></script>
 <!--===============================================================================================-->
-<script src="js/login/main.js"></script>
+<script src="admin/js/login/main.js"></script>
 
 </body>
 </html>

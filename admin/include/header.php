@@ -121,22 +121,22 @@ if ($_SERVER['REQUEST_METHOD']=='GET' && isset($_GET['logout'])){
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="pages/charts/chartjs.html">
+                        <a class="nav-link" href="order-list.php">
                             <i class="mdi mdi-chart-bar menu-icon"></i>
-                            <span class="menu-title">Charts</span>
+                            <span class="menu-title">Đơn hàng</span>
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="pages/tables/basic-table.html">
-                            <i class="mdi mdi-table-large menu-icon"></i>
-                            <span class="menu-title">Tables</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="https://www.bootstrapdash.com/demo/plus-free/documentation/documentation.html" class="nav-link" target="_blank">
-                            <i class="mdi mdi-file-document-box menu-icon"></i>
-                            <span class="menu-title">Docs</span></a>
-                    </li>
+<!--                    <li class="nav-item">-->
+<!--                        <a class="nav-link" href="pages/tables/basic-table.html">-->
+<!--                            <i class="mdi mdi-table-large menu-icon"></i>-->
+<!--                            <span class="menu-title">Tables</span>-->
+<!--                        </a>-->
+<!--                    </li>-->
+<!--                    <li class="nav-item">-->
+<!--                        <a href="https://www.bootstrapdash.com/demo/plus-free/documentation/documentation.html" class="nav-link" target="_blank">-->
+<!--                            <i class="mdi mdi-file-document-box menu-icon"></i>-->
+<!--                            <span class="menu-title">Docs</span></a>-->
+<!--                    </li>-->
 
                 </ul>
             </div>

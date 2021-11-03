@@ -76,7 +76,7 @@
                     <!-- Single Widget -->
                     <div class="single-footer about">
                         <div class="logo">
-                            <a href="index.html"><img src="images/logo2.png" alt="#"></a>
+                            <a href="index.php"><img src="images/logo2.png" alt="#"></a>
                         </div>
                         <p class="call">SĐT<span><a href="tel:123456789">+0123 456 789</a></span></p>
                     </div>
@@ -157,7 +157,20 @@
     </div>
 </footer>
 <!-- /End Footer Area -->
-
+<script>
+    function addCart(productid){
+        $.post("shoppingcart.php",{'productid':productid},function (data,status){
+            alert('Đã thêm vào giỏ hàng');
+            $("#listcart").load("http://localhost/shoes/ .cart");
+        });
+    }
+    function removeCart(id){
+        $.post('updatecart.php',{'id':id,'num':0},function(data){
+            $("#listcart").load("http://localhost/shoes/ .cart");
+            $(".total-amount").load("http://localhost/shoes/viewcart.php .total");
+        });
+    }
+</script>
 <!-- Jquery -->
 <script src="js/jquery.min.js"></script>
 <script src="js/jquery-migrate-3.0.0.js"></script>
